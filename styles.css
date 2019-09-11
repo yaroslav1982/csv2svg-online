@@ -1,0 +1,181 @@
+.black {
+	BACKGROUND-COLOR: #000000
+}
+.white {
+	BACKGROUND-COLOR: #ffffff
+}
+.left {
+	FONT-SIZE: x-small; BACKGROUND-COLOR: #0000cc
+}
+.right {
+	BACKGROUND-COLOR: #e7e4df
+}
+.top {
+	BACKGROUND-COLOR: #486aab
+}
+.blue {
+	BACKGROUND-COLOR: #0000cc
+}
+.bordo {
+	FONT-SIZE: 11px; COLOR: #ffffff; BACKGROUND-COLOR: #7f1800
+}
+.yelline {
+	BACKGROUND-COLOR: #e8dcb8
+}
+.shadow {
+	BACKGROUND-COLOR: #737373
+}
+.liorange {
+	BACKGROUND-COLOR: #ffe9de
+}
+.just {
+	FONT-SIZE: x-small; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-ALIGN: justify
+}
+.time {
+	COLOR: #ffffff; BACKGROUND-COLOR: #0000a5
+}
+BODY {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; FONT-SIZE: small; PADDING-BOTTOM: 0px; MARGIN: 0px; COLOR: #000000; PADDING-TOP: 0px; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+H1.home {
+	FONT-WEIGHT: normal; FONT-SIZE: xx-small; MARGIN: 0px; COLOR: #000080; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+P {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; COLOR: #000000; TEXT-INDENT: 0.2in; PADDING-TOP: 10px; FONT-FAMILY: Tahoma, Verdana, Arial; TEXT-ALIGN: justify
+}
+TABLE {
+	FONT-SIZE: small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+TD {
+	FONT-SIZE: small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+P.subheader {
+	FONT-SIZE: small; COLOR: #fec6af; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+P.orangeheader {
+	FONT-SIZE: small; COLOR: #ef3f00; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+P.blueheader {
+	FONT-SIZE: small; TEXT-TRANSFORM: uppercase; COLOR: #0000a5; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+P.bordoheader {
+	FONT-SIZE: small; TEXT-TRANSFORM: uppercase; COLOR: #7f1800; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+P.left {
+	FONT-SIZE: small; COLOR: #cccccc; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+P.center {
+	FONT-SIZE: small; COLOR: #333333; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-ALIGN: justify
+}
+P.small {
+	FONT-SIZE: x-small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+A {
+	FONT-SIZE: small; COLOR: #000080; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+A:hover {
+	FONT-SIZE: small; COLOR: #0000ff; FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+A.main {
+	FONT-SIZE: x-small; COLOR: #0000a5; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+A.main:hover {
+	FONT-SIZE: x-small; COLOR: #0000a5; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: underline
+}
+A.mainsm {
+	FONT-SIZE: small; COLOR: #0000a5; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+A.mainsm:hover {
+	FONT-SIZE: small; COLOR: #0000a5; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: underline
+}
+A.new {
+	FONT-SIZE: x-small; COLOR: #ffeee7; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+A.new:hover {
+	FONT-SIZE: x-small; COLOR: #ffeee7; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: underline
+}
+A.gr {
+	FONT-WEIGHT: bold; FONT-SIZE: x-small; COLOR: #333333; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+A.gr:hover {
+	FONT-WEIGHT: bold; FONT-SIZE: x-small; COLOR: #0000a5; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: underline
+}
+A.submenu {
+	FONT-SIZE: 12px; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+A.submenu:hover {
+	FONT-SIZE: 12px; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+A.bl {
+	FONT-SIZE: small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+A.bl:hover {
+	FONT-SIZE: small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: underline
+}
+A.more {
+	FONT-SIZE: small; COLOR: #0000a5; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+A.more:hover {
+	FONT-SIZE: small; COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #0000a5; TEXT-DECORATION: none
+}
+A.grey {
+	FONT-SIZE: 11px; COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+A.grey:hover {
+	FONT-SIZE: 11px; COLOR: #ffffff; FONT-FAMILY: Arial, Helvetica, sans-serif; TEXT-DECORATION: none
+}
+INPUT {
+	FONT-SIZE: small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+INPUT.enter {
+	BORDER-RIGHT: white 1px outset; BORDER-TOP: white 1px outset; FONT-WEIGHT: bold; FONT-SIZE: small; BORDER-LEFT: white 1px outset; COLOR: #ffffff; BORDER-BOTTOM: white 1px outset; FONT-FAMILY: Arial, Helvetica, sans-serif; HEIGHT: 20px; BACKGROUND-COLOR: #7f1800
+}
+TEXTAREA {
+	FONT-SIZE: small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+SELECT {
+	FONT-SIZE: small; COLOR: #000000; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #ffffff
+}
+
+@media All    
+{
+.pad {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; FONT-SIZE: x-small
+}
+    }
+TD.cit {
+	FONT-SIZE: 14px; COLOR: #000393; FONT-FAMILY: Times; BACKGROUND-COLOR: #fffaca; TEXT-ALIGN: justify
+}
+.of {
+	FONT-WEIGHT: bold; FONT-SIZE: 16px; COLOR: #ffffff; TEXT-INDENT: 1in; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #4557d3; TEXT-ALIGN: left
+}
+.fl {
+	FONT-SIZE: small; COLOR: #515151; FONT-FAMILY: Verdana, Helvetica, sans-serif; BACKGROUND-COLOR: #d5d9f4
+}
+.of2 {
+	FONT-WEIGHT: bold; FONT-SIZE: 16px; COLOR: #000000; TEXT-INDENT: 1in; FONT-FAMILY: Arial, Helvetica, sans-serif; BACKGROUND-COLOR: #e8dcb8; TEXT-ALIGN: left
+}
+.fl2 {
+	FONT-SIZE: small; COLOR: #515151; FONT-FAMILY: Verdana, Helvetica, sans-serif; BACKGROUND-COLOR: #e7e4df
+}
+.FOOTNOTE {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; FONT-SIZE: x-small; PADDING-BOTTOM: 10px; COLOR: #808080; PADDING-TOP: 10px
+}
+.menu A {
+	PADDING-RIGHT: 30px; PADDING-LEFT: 30px; PADDING-BOTTOM: 30px; MARGIN: 30px; COLOR: #063335; PADDING-TOP: 30px; TEXT-DECORATION: none
+}
+.menu A:visited {
+	PADDING-RIGHT: 30px; PADDING-LEFT: 30px; PADDING-BOTTOM: 30px; MARGIN: 30px; COLOR: #063335; PADDING-TOP: 30px; TEXT-DECORATION: none
+}
+.menu A:hover {
+	PADDING-RIGHT: 30px; PADDING-LEFT: 30px; PADDING-BOTTOM: 30px; MARGIN: 30px; COLOR: #0000ff; PADDING-TOP: 30px; BACKGROUND-COLOR: #ffffff; TEXT-DECORATION: none
+}
+.everybody {
+	FONT-SIZE: 11px; COLOR: white
+}
+H1 {
+	PADDING-RIGHT: 15px; PADDING-LEFT: 15px; PADDING-BOTTOM: 15px; PADDING-TOP: 15px
+}
+H3 {
+	PADDING-RIGHT: 30px; PADDING-LEFT: 30px; PADDING-BOTTOM: 30px; PADDING-TOP: 30px
+}

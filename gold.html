@@ -1,0 +1,491 @@
+﻿<!DOCTYPE html>
+<html  lang="ru">
+<head>
+	<title>#csv2svg</title>
+	<meta charset="UTF-8"/>
+	<link href="css/ui_style.css" rel="stylesheet"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=1"/>
+	<script src="jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="XY-metal.js"></script>
+	<script src="plotly.min.js"></script>
+	<script src="plot_script.js"></script>
+	<script src="js/data1.js"></script>
+	<script src="js/data2.js"></script>
+</head>
+
+
+<body>
+
+<h3>Кликните на график два раза, чтобы переключиться на "1900-2020" либо "1980-2020"</h3>
+
+<h3>Для визуализации курсов в разных графиках отметьте их галочками, потом нажмите "Вывести таблицу" и "Next"</h3>
+
+<div class="page flex-center">
+
+	<div id="plot_holder" class="flexed">
+
+
+
+
+		<div>
+
+
+			<div class="centered">Цены драгметаллов, <br> Доллар/унция (USD/OZ)</div>
+			<div id="div0" style="width:100%;height:100%;"></div>
+		</div>
+		<div>
+			<div class="centered">Цены драгметаллов по отношению к цене серебра <br> (XAU/XAG, XPT/XAG, XPD/XAG)</div>
+			<div id="div1" style="width:100%;height:100%;"></div>
+		</div>
+	</div>
+
+<table>
+<tr>
+<td>
+
+		<button onclick="plot1120(0); plot1120(1);table_time((new Date).getFullYear()-120)">120 лет</button>
+</td>
+<td>
+
+		<button onclick="plot180(0); plot180(1);table_time((new Date).getFullYear()-80)">80 лет</button>
+
+</td>
+<td>
+		<button onclick="plot30(0); plot30(1);table_time((new Date).getFullYear()-30)">30 лет</button>
+
+</td>
+<td>
+		<button onclick="plot120(0);plot120(1);table_time((new Date).getFullYear()-20)">20 лет</button>
+
+</td>
+<td>
+		<button onclick="plot110(0);plot110(1);table_time((new Date).getFullYear()-10)">10 лет</button>
+
+</td>
+<td>
+		<button onclick="plot15(0);plot15(1);table_time((new Date).getFullYear()-5)">5 лет</button>
+
+</td>
+<td>
+		<button onclick="plot11(0);plot11(1);table_time((new Date).getFullYear()-1)">1 год</button>
+
+</td>
+</tr>
+</table>
+
+
+<table>
+<tr>
+<td>
+	<textarea id="Xsc0" name="Xsc0" cols="20" rows="1" WRAP = "off">1900;2020</textarea>
+</td>
+<td>
+
+	<textarea id="Ysc0" name="Ysc0" cols="20" rows="1" WRAP = "off"  style="display: none;">2020</textarea>
+</td>
+<td>
+	<textarea id="Xsc1" name="Xsc1" cols="20" rows="1" WRAP = "off"  style="display: none;">2017</textarea>
+</td>
+<td>
+	<textarea id="Ysc1" name="Ysc1" cols="20" rows="1" WRAP = "off"  style="display: none;">2020</textarea>
+</td>
+</tr>
+</table>
+
+
+<table>
+<tr>
+<td>
+<div class="ui_button" id="next_button1">Вывести таблицу</div>
+</td>
+<td>
+		<button onclick="window.location.href='calcnew.html#metal';">Next>></button>
+</td>
+</tr>
+</table>
+
+	<textarea id="cols" name="cols" cols="10" rows="10" hidden>0;6;;0;1#Js;Jr
+5;3;;5;7#dJb/dB;dJa/dB</textarea>
+
+
+<textarea id="tar1" name="tar1" style="max-width: 80vw;max-height: 50vh;"></textarea>
+
+<textarea class="input_type" id="temptext" name="temptext">
+0 1 10;510 110;10 0 0 #766337 1 1
+0 2 10;510 220;120 0 0 #97499B 1 1
+0 3 10;510 330;230 0 0 #A9A33A 1 1
+0 4 10;510 440;340 0 0 #A346B3 1 1
+</textarea>
+
+</div>
+<div class="page">
+
+<div class="right_sided">
+
+
+<input type="checkbox" id="Che" checked hidden />
+
+
+		</div>
+				<div>Размер рабочего поля: 
+					<select id="paper" name="paper" class="input_type" onchange="onlyrest()">
+						<option value="1748;1240;A3(Horizontal) - 297 x 420 mm">A3(Horizontal) - 297 x 420 mm</option>
+
+						<option value="1240;1748;A3(Vertical) - 420 x 297 mm">A3(Vertical) - 420 x 297 mm</option>
+
+						<option value="1240;874;A4(Horizontal) - 210 x 297 mm" selected>A4(Horizontal) - 210 x 297 mm</option>
+
+						<option value="874;1240;A4(Vertical) - 297 x 210 mm">A4(Vertical) - 297 x 210 mm</option>
+
+						<option value="874;620;A5(Horizontal) - 148 x 210 mm">A5(Horizontal) - 148 x 210 mm</option>
+
+						<option value="620;874;A5(Vertical) - 210 x 148 mm">A5(Vertical) - 210 x 148 mm</option>
+					</select>
+				</div>
+				<div hidden>
+					Workspace size (user defined): 
+					<input id="A4WH" class="input_type" value="874;620;A5(Horizontal)"/>
+				</div>
+
+	<div id="content_holder">
+
+		<div id="data_block" class="container">
+			<div class="centered">
+				<div style="flex-direction: column;display: flex;">
+					<textarea class="input_type" id="target" name="target" hidden></textarea>
+					<div id="data_table">
+						<div class="dt_header">
+							<div class="main dt_column"></div>
+							<div class="dt_head_loader">
+								<div class="loader"></div>
+							</div>
+						</div>
+						<div class="dt_body">
+							<div><div class="main dt_column"></div></div>
+							<div class="dt_row_loader">
+								<div class="loader"></div>
+							</div>
+						</div>
+					</div>
+						<textarea  class="input_type" id="delimiters"  name="delimiters" style="display: none;height:90px;"></textarea>
+				</div>
+			</div>
+		</div>
+
+		<div class="container undisplayable" style="display: none;">
+			<div class="hideable">
+				<div class="hideable_title"><p class="icon hide_icon"></p>Template of plots</div>
+				<div class="centered">
+
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+</div>
+	
+	<script>
+		$("#target").val(table_data);
+  document.getElementById('cols').value='0;1;;0;2;;0;3;;0;4#Золото, USD/OZ;Серебро, USD/OZ;Платина, USD/OZ;Палладий, USD/OZ#ffa500;555555;888888;000000\n0;2;;0;6;;0;9;;0;10#Серебро, USD/OZ;Золото/Серебро;Платина/Серебро;Палладий/Серебро#555555;ffa500;888888;000000';
+
+  	plot1(0);
+
+  plot1(1);
+plot2();
+	$("body").scrolltTop
+
+
+function plot1120(ik)
+{
+
+var k=ik;
+var myDiv = document.getElementById(lay1(k));
+var data = [];
+Plotly.plot(myDiv, data, layout,{  
+  modeBarButtonsToAdd: [{name: 'Download plot as SVG',    icon: Plotly.Icons.camera,    
+  click: function(gd) {Plotly.downloadImage(gd, {format: 'svg'}) } }]
+});
+var update = {
+    'xaxis.range': ["1900-01-01", "2020-01-01"]   // updates the xaxis range
+};
+Plotly.relayout(myDiv, update);
+
+  document.getElementById('Xsc0').value="1900;2020";
+  document.getElementById('Xsc1').value="1900;2020";
+
+}
+
+function plot180(ik)
+{
+
+var k=ik;
+var myDiv = document.getElementById(lay1(k));
+var data = [];
+Plotly.plot(myDiv, data, layout,{  
+  modeBarButtonsToAdd: [{name: 'Download plot as SVG',    icon: Plotly.Icons.camera,    
+  click: function(gd) {Plotly.downloadImage(gd, {format: 'svg'}) } }]
+});
+var update = {
+    'xaxis.range': ["1940-01-01", "2020-01-01"]   // updates the xaxis range
+};
+Plotly.relayout(myDiv, update);
+
+  document.getElementById('Xsc0').value="1940;2020";
+  document.getElementById('Xsc1').value="1940;2020";
+
+}
+
+function plot140(ik)
+{
+
+var k=ik;
+var myDiv = document.getElementById(lay1(k));
+var data = [];
+Plotly.plot(myDiv, data, layout,{  
+  modeBarButtonsToAdd: [{name: 'Download plot as SVG',    icon: Plotly.Icons.camera,    
+  click: function(gd) {Plotly.downloadImage(gd, {format: 'svg'}) } }]
+});
+var update = {
+    'xaxis.range': ["1900-01-01", "2020-01-01"]   // updates the xaxis range
+};
+Plotly.relayout(myDiv, update);
+
+  document.getElementById('Xsc0').value="1900;2020";
+  document.getElementById('Xsc1').value="1900;2020";
+
+}
+
+function plot30(ik)
+{
+var k=ik;
+var myDiv = document.getElementById(lay1(k));
+var data = [];
+Plotly.plot(myDiv, data, layout,{  
+  modeBarButtonsToAdd: [{name: 'Download plot as SVG',    icon: Plotly.Icons.camera,    
+  click: function(gd) {Plotly.downloadImage(gd, {format: 'svg'}) } }]
+});
+var update = {
+    'xaxis.range': ["1990-01-01", "2020-01-01"]   // updates the xaxis range
+};
+Plotly.relayout(myDiv, update);
+  document.getElementById('Xsc0').value="1990;2020";
+  document.getElementById('Xsc1').value="1990;2020";
+
+}
+
+function plot1120(ik)
+{
+var k=ik;
+var myDiv = document.getElementById(lay1(k));
+var data = [];
+Plotly.plot(myDiv, data, layout,{  
+  modeBarButtonsToAdd: [{name: 'Download plot as SVG',    icon: Plotly.Icons.camera,    
+  click: function(gd) {Plotly.downloadImage(gd, {format: 'svg'}) } }]
+});
+
+myDiv.on('plotly_relayout',
+
+
+    function(eventdata){  
+
+ //////////var newIndex = myDiv.layout.annotations;
+
+       // var ab=lay1(k)+'\n' +
+       //     'x1:' + eventdata['xaxis.range[0]'] + '\n' +
+       //     'x2:' + eventdata['xaxis.range[1]'] + '\n' +
+       //     'y1:' + eventdata['yaxis.range[0]'] + '\n' +
+       //     'y2:' + eventdata['yaxis.range[1]'];
+var x1x2=eventdata['xaxis.range[0]']+";"+eventdata['xaxis.range[1]'];
+var y1y2=eventdata['yaxis.range[0]']+";"+eventdata['yaxis.range[1]'];
+//var a1=newX1X2(x1x2);
+//var a2=newX1X2(y1y2);
+
+//var ab=trioseq(a1)+"\n"+trioseq(a2);
+
+document.getElementById("Xsc"+k.toString()).value = x1x2;//a1;
+document.getElementById("Ysc"+k.toString()).value = y1y2;//a2;
+
+//document.getElementById(tata(k)).value = ab;
+    });
+
+
+
+
+var update = {
+    'xaxis.range': ["1900-01-01", "2020-01-01"]   // updates the xaxis range
+};
+Plotly.relayout(myDiv, update);
+  document.getElementById('Xsc0').value="1900;2020";
+  document.getElementById('Xsc1').value="1900;2020";
+}
+
+function plot120(ik)
+{
+var k=ik;
+var myDiv = document.getElementById(lay1(k));
+var data = [];
+Plotly.plot(myDiv, data, layout,{  
+  modeBarButtonsToAdd: [{name: 'Download plot as SVG',    icon: Plotly.Icons.camera,    
+  click: function(gd) {Plotly.downloadImage(gd, {format: 'svg'}) } }]
+});
+
+myDiv.on('plotly_relayout',
+
+
+    function(eventdata){  
+
+ //////////var newIndex = myDiv.layout.annotations;
+
+       // var ab=lay1(k)+'\n' +
+       //     'x1:' + eventdata['xaxis.range[0]'] + '\n' +
+       //     'x2:' + eventdata['xaxis.range[1]'] + '\n' +
+       //     'y1:' + eventdata['yaxis.range[0]'] + '\n' +
+       //     'y2:' + eventdata['yaxis.range[1]'];
+var x1x2=eventdata['xaxis.range[0]']+";"+eventdata['xaxis.range[1]'];
+var y1y2=eventdata['yaxis.range[0]']+";"+eventdata['yaxis.range[1]'];
+//var a1=newX1X2(x1x2);
+//var a2=newX1X2(y1y2);
+
+//var ab=trioseq(a1)+"\n"+trioseq(a2);
+
+document.getElementById("Xsc"+k.toString()).value = x1x2;//a1;
+document.getElementById("Ysc"+k.toString()).value = y1y2;//a2;
+
+//document.getElementById(tata(k)).value = ab;
+    });
+
+
+
+
+var update = {
+    'xaxis.range': ["2000-01-01", "2020-01-01"]   // updates the xaxis range
+};
+Plotly.relayout(myDiv, update);
+  document.getElementById('Xsc0').value="2000;2020";
+  document.getElementById('Xsc1').value="2000;2020";
+}
+
+
+function plot110(ik)
+{
+var k=ik;
+var myDiv = document.getElementById(lay1(k));
+var data = [];
+Plotly.plot(myDiv, data, layout,{  
+  modeBarButtonsToAdd: [{name: 'Download plot as SVG',    icon: Plotly.Icons.camera,    
+  click: function(gd) {Plotly.downloadImage(gd, {format: 'svg'}) } }]
+});
+var update = {
+    'xaxis.range': ["2010-01-01", "2020-01-01"]   // updates the xaxis range
+};
+Plotly.relayout(myDiv, update);
+  document.getElementById('Xsc0').value="2010;2020";
+  document.getElementById('Xsc1').value="2010;2020";
+
+}
+
+function plot15(ik)
+{
+var k=ik;
+var myDiv = document.getElementById(lay1(k));
+var data = [];
+Plotly.plot(myDiv, data, layout,{  
+  modeBarButtonsToAdd: [{name: 'Download plot as SVG',    icon: Plotly.Icons.camera,    
+  click: function(gd) {Plotly.downloadImage(gd, {format: 'svg'}) } }]
+});
+var update = {
+    'xaxis.range': ["2015-01-01", "2020-01-01"]   // updates the xaxis range
+};
+Plotly.relayout(myDiv, update);
+  document.getElementById('Xsc0').value="2015;2020";
+  document.getElementById('Xsc1').value="2015;2020";
+}
+
+function plot11(ik)
+{
+var k=ik;
+var myDiv = document.getElementById(lay1(k));
+var data = [];
+Plotly.plot(myDiv, data, layout,{  
+  modeBarButtonsToAdd: [{name: 'Download plot as SVG',    icon: Plotly.Icons.camera,    
+  click: function(gd) {Plotly.downloadImage(gd, {format: 'svg'}) } }]
+});
+var update = {
+    'xaxis.range': ["2019-01-01", "2020-01-01"]   // updates the xaxis range
+};
+Plotly.relayout(myDiv, update);
+  document.getElementById('Xsc0').value="2019;2020";
+  document.getElementById('Xsc1').value="2019;2020";
+}
+
+
+
+
+function rplot(ik)
+{
+var k=ik;
+var myDiv = document.getElementById(lay1(k));
+var data = [];
+Plotly.plot(myDiv, data, layout,{  
+  modeBarButtonsToAdd: [{name: 'Download plot as SVG',    icon: Plotly.Icons.camera,    
+  click: function(gd) {Plotly.downloadImage(gd, {format: 'svg'}) } }]
+
+});
+
+
+
+
+        var xAxis = eventdata.xaxis;
+        var yAxis = eventdata.yaxis;
+        //console.log('X-axis range: ' + xAxis);
+alert('X-axis range: ' + xAxis);
+        //console.log('Y-axis range: ' + yAxis);
+alert('Y-axis range: ' + yAxis);
+
+
+
+
+
+
+}
+
+
+
+
+</script>
+	<script src="XY-metal.js"></script>
+
+<!-- Yandex.Metrika counter
+	<script type="text/javascript">
+		(function (d, w, c) {
+			(w[c] = w[c] || []).push(function() {
+				try {
+					w.yaCounter42436314 = new Ya.Metrika({
+						id:42436314,
+						clickmap:true,
+						trackLinks:true,
+						accurateTrackBounce:true
+					});
+				} catch(e) { }
+			});
+
+
+			var n = d.getElementsByTagName("script")[0],
+			s = d.createElement("script"),
+			f = function () { n.parentNode.insertBefore(s, n); };
+			s.type = "text/javascript";
+			s.async = true;
+			s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+			if (w.opera == "[object Opera]") {
+				d.addEventListener("DOMContentLoaded", f, false);
+			} else { f(); }
+		})(document, window, "yandex_metrika_callbacks");
+	</script>
+	<noscript><div><img src="https://mc.yandex.ru/watch/42436314" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+ -->
+	<script src="js/index_scripts-gold.js"></script>
+	<script src="js/ui_script-gold.js"></script>
+</body>
+</html>

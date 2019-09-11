@@ -1,461 +1,114 @@
-﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
-    <title>#csv2svg plot online</title>
-    <meta charset="UTF-8"/>
-    <link href="css/ui_style_fd.css" rel="stylesheet"/>
-    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=0"/>
-
-    <script src="js/math.min.js"></script>	
-    <script src="js/jquery-3.2.1.js"></script>
-    <script src="js/raphael.min.js"></script>
-
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, height=device-height"/>
+	<title>Визуализация данных / Data visualization</title>
+	<style>
+		*{position: relative;box-sizing: border-box;}
+		BODY {
+			line-height: 1.3;
+			background-color: #FFFFFF;
+			color: #000000;
+			padding:0;
+		}
+		H1 { margin-top:2em;font-size:3vh;font-family: Verdana,sans-serif;font-weight: normal;letter-spacing: -0.1em}
+        h3 {font-size:2vh;font-weight: normal;margin-bottom:2rem;}
+		div a{
+			display: flex;
+			margin: 0 35%;
+			align-items: center;
+            text-decoration: none;
+            margin-bottom:1em;
+		}
+		div img{
+            max-height: calc(5.5vh + 1vw);
+            height:100%;
+            width: calc(5.5vh + 1vw);
+            max-width: fit-content;
+			margin-right:1em;
+		}
+		A:hover{text-decoration: underline;}
+		A:hover img{
+			filter:sepia(1.1);
+		}
+		A:link { color: #333333; }
+		A:visited { color: #333333; }
+		A:active { color: #999999; }
+		footer{margin-top:3em;text-align: right;font-size:0.9em;}
+        @media screen and  (max-height:800px){
+            div a{margin:0 15%;margin-bottom:0.5em;}
+            footer{font-size:0.75em;}
+        }
+	</style>
 </head>
- <body onload="newbuild()"> 
 
-				
-					<select id="paper" name="paper"class="input_type" onchange="onlyrest()" style="width: 350px;">
-						<option value=1>1748;1240;A3(Horizontal) - 297 x 420 mm</option>
-
-						<option value=2>1240;1748;A3(Vertical) - 420 x 297 mm</option>
-
-						<option value=3 selected>1240;874;A4(Horizontal) - 210 x 297 mm</option>
-
-						<option value=4 >874;1240;A4(Vertical) - 297 x 210 mm</option>
-
-						<option value=5>874;620;A5(Horizontal) - 148 x 210 mm</option>
-
-						<option value=6>620;874;A5(Vertical) - 210 x 148 mm</option>
-					</select>
-					
-					<input id="A4WH" class="input_type" value="1240;874;A4(Horizontal)">
-
-
-
-                                <div class="btn_group">
-                                    <div class="ui_button" id="save_button" onclick="saveTextAsFile()" style="display: none;">Save SVG</div>
-                                    <div class="ui_button" id="print_button" onclick="window.print();"  style="display: none;">Print SVG</div>
-                                </div>
-
-
-
-
-				</div>
-
-
-
-<font color="red"> Open file: </font>
-<input type="file" id="fileToLoad2"onchange="loadCSVtext();">
-
-
-Xstep: <script src="js/plotlyXY.js"></script>&emsp;
-<input type="button" value="Save SVG" onclick="saveTextAsFile()">
-<input type="button" value="Print SVG" onclick="window.print();">
-
-
-
-
-<div class="ui_button" id="next_button"  style="display: none;">Нарисовать график>></div>
-
-
-    <script src="js/adaptation.js"></script>
-
-<textarea  class="input_type" id="xColor"  name="xColor"  style="display: none;">red</textarea>
-<textarea  class="input_type" id="xStep"  name="xStep"  style="display: none;">0.5</textarea>
-
-    <div id="content_holder">
-        <div class="floating_block">
-
-
-            <div class="container centered">
-                <div class="content_header">
-
-
-
-
-
-
-
-	<script src="js/index_scripts.js"></script>
-	<script src="js/ui_script.js"></script>
-
-                </div>
-
-
-
-                <div class="content_co_header">
-                    
-
-
-                </div>
-
-
-
-
-
-            </div>
-            <div id="create_wrapper">
-                <div id="sideLock"></div>
-                <div id="create_holder">
-                    <div id="creater" class="ui_button"  style="display: none;"></div>
-                </div>
-                <div id="sider">
-                    <div class="main container centered">
-                        <div class="centered">
-                            <div class="lined_block">
-                                <div class="btn_group">
-                                    <div class="ui_button" id="new_button" style="display:none;">Новый график (N)</div>
-
-                                    <div class="ui_button" id="change_button" style="display:none;" >Переместить график (M)</div>
-
-                                </div>
-                            </div>
-                            <div class="lined_block">
-
-<div class="ui_button" onclick="$('#new_button').click(); copySwap('1'); xpp(); $('#new_button').click(); copySwap('2'); xpp(); $('#new_button').click(); copySwap('3'); xpp(); $('#new_button').click();" style="display:none;" >Plot</div>
-
-<div class="ui_button" onclick="$('#plotly0').show(); argrect('5 1 10;710 110;10'); copySwap('1'); xpp(); argplot('5','2','10;510','220;120'); copySwap('2'); xpp(); argplot('5','3','10;510','330;230'); copySwap('3'); xpp(); argplot('5','4','10;510','440;340'); alert(vartemp);" style="display:none;" >Plot</div>
-
-                            </div>
-
-
-                        </div>
-
-                    </div>
-
-                    <div class="main container centered">
-
-                        <div>
-                        
-
-			    
-                        </div>
-                        <div class="temp" hidden>
-                            <div class="ui_button" onclick="MM3();">MM3</div>
-                        </div>
-
-
-                        
-                            <input id="XYc" class="input_type" name="XYc"  type="text"  style="display:none;" value="0;1#Js;Ji" disabled/>
-                            
-
-<textarea id="bibi" class="input_type" name="bibi" style="display:none;"></textarea>
-                    
-<textarea id="zizi" class="input_type" name="zizi" style="display:none;"></textarea>
-
-<input id="bibi" class="input_type"  style="display:none;" value="111" />
-
-
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container" id="printer">
-            <div class="centered" id="plotly0">
-                <div id="scroller"></div>
-                <div class="paper" id="svg_paper"></div>
-                <b id="boldStuff" style="color:transparent;">SVG</b>
-            </div>
-        </div>
-
-
-<div class="container undisplayable"><div class="hideable">
-<div class="hideable_title">
-<p class="icon hide_icon"></p>Plot points</div>
-
-                    <div class="centered" style="display: none;">
-                        <div class="flexed_block">
-                        
-
-<br>
-
-                            
-                                    Shift OX/OY axes:
-                            <script src="js/plotlyZ_temp.js"></script>&emsp;
-                            <div>OX shift(down)=<input id="y330" type="text"  class="input_type" name="y330" value="810"/></div>
-                            <div>OY shift(right)=<input id="x330" type="text"  class="input_type" name="x330" value="20"/></div>
-<div class="ui_button" onclick="invOX();PLB();glue();changeText()" style="display: none;>Invert OX</div>
-                                    <div class="ui_button" onclick="invOY();PLB();glue();changeText()">Invert OY</div>
-                            <div class="ui_button" id="rect" style="display:none;">Draw rectangle</div>
-                            <div class="ui_button" id="ren" style="display:none;">Rename rectangle</div>
-                            <div class="btn_group">
-                                <div class="ui_button" id="del" style="display: none;">Remove rectangle (L)</div>                    
-                                <div class="ui_button" id="clr" style="display: none;">Remove all rectangles</div>
-<div class="ui_button" id="old_button" style="display: none;">Remove plot</div>
-                                    <div class="ui_button"  style="display: none;" onclick="del9();glue();changeText()">Remove all plots</div>
-</div>
-</div>
-
-
-
-                        <div class="flexed_block">
-                            
-
-<textarea class="input_type" id="target" name="target">	mv_Q	Fsr_mV		mv_Q	Fsr_mV
-1	14	259	1	17	134
-2	17	257	2	19	135
-3	18	253	3	12	133
-4	12	248	4	14	131
-5	17	243	5	16	131
-6	19	239	6	18	130
-7	18	237	7	19	129
-8	14	235	8	14	129
-9	12	231	9	13	128
-10	17	229	10	16	127
-11	18	226	11	17	128
-12	16	223	12	15	127
-13	13	219	13	15	126
-14	12	216	14	14	125
-15	15	213	15	17	126
-16	15	209	16	19	125
-17	16	206	17	18	123
-18	19	204	18	16	123
-19	14	203	19	16	121
-20	17	199	20	18	120
-21	18	195	21	19	119
-22	12	193	22	16	119
-23	14	187	23	13	117
-24	13	184	24	14	117
-25	12	179	25	16	117
-26	15	175	26	19	115
-27	16	172	27	14	114
-28	19	168	28	14	113
-29	18	164	29	17	111
-30	15	161	30	18	111
-31	14	157	31	17	112
-32	17	154	32	17	110
-33	14	149	33	15	109
-34	14	146	34	12	108
-35	16	142	35	12	105
-36	12	139	36	14	103
-37	13	136	37	15	101
-38	16	134	38	18	101
-39	18	130	39	16	100
-40	13	128	40	16	99
-41	16	126	41	17	98
-42	18	124	42	17	98
-43	13	121	43	15	97
-44	14	119	44	16	95
-45	12	117	45	16	93
-46	11	114	46	15	91
-47	16	112	47	17	91
-48	16	98	48	19	89
-49	13	95	49	13	87
-50	13	92	50	15	85
-51	15	89	51	18	82
-52	19	86	52	16	81
-53	16	84	53	18	78
-54	14	79	54	14	76
-55	18	75	55	13	73
-56	18	71	56	12	71
-57	15	69	57	14	71
-58	19	65	58	15	68
-59	15	63	59	19	65
-60	14	59	60	16	63
-61	12	57	61	13	61
-62	16	53	62	13	60
-63	14	51	63	14	59
-64	13	48	64	15	57
-65	16	46	65	13	54
-66	18	43	66	14	51
-67	13	42	67	16	50
-68	11	39	68	18	50
-69	13	36	69	19	48
-70	17	31	70	13	46
-71	19	28	71	13	43
-72	13	26	72	12	41
-73	14	24	73	15	40
-74	19	23	74	19	37
-75	13	21	75	18	35
-76	13	21	76	14	32
-77	18	19	77	14	30
-78	14	19	78	16	27
-79	12	18	79	14	24
-80	18	17	80	17	22
-81	15	17	81	18	19
-82	16	16	82	17	18
-83	13	14	83	16	16
-84	15	14	84	15	16
-85	14	13	85	18	15
-86	13	13	86	15	14
-87	16	12	87	14	13
-88	17	12	88	14	12
-89	19	11	89	16	10
-90	18	9	90	17	9
-91	19	8	91	17	9
-92	17	8	92	17	7
-93	16	7	93	17	6
-94	13	5	94	14	4
-95	19	5	95	16	4
-96	16	4	96	18	3
-97	13	3	97	14	2
-98	17	3	98	13	1
-99	12	1	99	12	0
-100	14	0	100	13	0
-</textarea>
-<textarea  class="input_type" id="delimiters"  name="delimiters" style="display: none;height:90px;"></textarea>
-<textarea  class="input_type" id="ftype"  name="ftype"  style="display: none;">CSV</textarea>
-<textarea id="inputTextToSave" class="input_type" style="display: none;"></textarea>
-<textarea class="input_type" id="temptext" name="temptext">0 1 20;1100 810;10 0 0 red 1 1
-0 2 20;1100 810;10 0 0 black 0 0</textarea>
-<textarea  class="input_type" id="xColor"  name="xColor"  style="display: none;">red</textarea>
-                        <div class="container centered">
-
-                            <textarea id="inputTextToSave" class="input_type"  style="display: none;"></textarea>
-                            <textarea id="memo0" style="display:none;" class="input_type"></textarea>
-                            <textarea id="memo1" style="display:none;" class="input_type"></textarea>
-                            <textarea id="memo2" style="display:none;" class="input_type"></textarea>
-                            <textarea id="memo3" style="display:none;" class="input_type"></textarea>
-                            <textarea id="memo4" style="display:none;" class="input_type"></textarea>
-                            <textarea id="memo5" style="display:none;" class="input_type"></textarea>
-                            <textarea id="memo6" style="display:none;" class="input_type"></textarea>
-                            <textarea id="memo7" style="display:none;" class="input_type"></textarea>
-
-                        </div>
-                        
-
-
-
-   </div>
-                                    <input type="button" value="Change plot" onclick="newbuild()">
-Save file (name):<input id="inputFileNameToSaveAs" class="input_type" placeholder="Plot"/>
-<input type="button" value="Save SVG" onclick="saveTextAsFile()">
-<input type="button" value="Print SVG" onclick="window.print();">
-                            
-
-
-                    </div>
-			
-</div></div>
-
-
-
-
-
-
-        <div class="container undisplayable"><div class="hideable">
-<div class="hideable_title">
-<p class="icon hide_icon"></p>OX parameters</div>
-                    <div class="centered" style="display: none;">
-
-                        <div>
-                            <script src="js/index1_write1.js"></script>
-                            <div class="temp" hidden>
-                                <div class="ui_button" id="xpers_button">newX1X2(20;100;20)</div>
-                            </div>
-                            <input id="XPERS" name="XPERS" type="text" class="input_type" value="0;15"/>
-                            <input id="ABCD" name="ABCD" type="text" class="input_type" value="0;500"/>
-
-                            <input id="xMMM" name="xMMM" type="text" class="input_type" value="0;500"/>
-			    <input id="Xis1" name="Xis1" type="text" class="input_type" value="0;500"/>
-                        </div>
-
-                        <textarea name="framewidth" id="fw" class="input_type" >100	100
-                            200	200
-                            300	300
-                            400	470
-                            500	500
-                            600	600
-                            700	700
-                            800	800
-                            900	900
-                        1000	1000</textarea>
-                    </div>
-
-
-                </div></div>
-
-        
-<div class="container undisplayable"><div class="hideable">
-<div class="hideable_title">
-<p class="icon hide_icon"></p>OY parameters</div>
-
-                    <div class="centered" style="display: none;">
-
-                        <div>
-                            <script src="js/index1_write2.js"></script>
-
-
-                            <input id="YPERS" name="YPERS" class="input_type" value="10;40"/>
-                            <input id="YBCD" name="YBCD" class="input_type" value="500;0"/>
-                            <input id="yMMM" name="yMMM" class="input_type" value="500;0"/>
-                            <input id="Yis1" name="Yis1" class="input_type" value="500;0"/>
-                        </div>
-                        <textarea name="frameheight" class="input_type" id="fh">50	100
-                            100	200
-                            150	300
-                            200	400
-                            250	560
-                            300	600
-                            350	700
-                            400	800
-                            450	900
-                        500	1000</textarea>
-                    </div>
-                
-
-
-            </div></div>
-
-
-
-
-        </div>
-
-
-    </div>
-
-    <div id="wrapper">
-
-</div>
-    <div id="footer">
-    </div>
-
-
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function (d, w, c) {
-            (w[c] = w[c] || []).push(function() {
-                try {
-                    w.yaCounter42436314 = new Ya.Metrika({
-                        id:42436314,
-                        clickmap:true,
-                        trackLinks:true,
-                        accurateTrackBounce:true
-                    });
-                } catch(e) { }
-            });
-
-            var n = d.getElementsByTagName("script")[0],
-            s = d.createElement("script"),
-            f = function () { n.parentNode.insertBefore(s, n); };
-            s.type = "text/javascript";
-            s.async = true;
-            s.src = "https://mc.yandex.ru/metrika/watch.js";
-
-            if (w.opera == "[object Opera]") {
-                d.addEventListener("DOMContentLoaded", f, false);
-            } else { f(); }
-        })(document, window, "yandex_metrika_callbacks");
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/42436314" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
-
-	<script src="js/index_scripts.js"></script>
-
-    <script src="js/index1_scripts.js"></script>
-    <script src="js/ui_script.js"></script>
-    <script src="XY.js"></script>
-
-This site uses <a href="https://github.com/DmitryBaranovskiy/raphael">Raphael</a>
-
-<br>
-Feedback: Yaroslav Solyanikov (Ярослав Соляников) +79644597661(WhatsApp) @yaroslav1982(Facebook) 
-<br>
-Github: <a href="https://github.com/yaroslav1982/csv2svg-online">csv2svg-online</a>
-
+<body bgcolor="white" text="black">
+
+<h1 align="center">Визуализация данных / Data visualization</h1> 
+<h3 align="center">#dataviz #multiplot #csv2svg #github49 #Graphr</h3> 
+<div><a href="gold.html">
+<img src="img/AU.png" alt="PNG">
+    <span>Золото-Серебро-Платина-Палладий (с легендой)</span>
+</a></div>
+<div><a href="calc.html">
+<img src="img/calc-RU-fx.png" alt="PNG">
+    <span>Рисование графиков функций и визуализация данных</span>
+</a></div>
+
+<div><a href="forecast_1.html">
+<img src="img/CSV-RU-SIMPLE-GREY-3.png" alt="PNG">
+    <span>Прогноз магаданских инновационных продуктов</span>
+</a></div>
+
+<div><a href="csv2svg.html">
+<img src="img/CSV-RU.png" alt="PNG">
+    <span>csv2svg.html</span>
+</a></div>
+<div><a href="index-php-simple.php">
+<img src="img/CSV-RU-SIMPLE-GREY.png" alt="PNG">
+    <span>csv2svg.php</span>
+</a></div>
+
+<footer>
+	Youtube: <a href="https://www.youtube.com/watch?v=xblVoJbxyIc">CSV2SVG - программа построения графиков</a>
+	<br>
+	Github: <a href="https://github.com/yaroslav1982/csv2svg-online">csv2svg-online</a>
+	<br>
+	Feedback: Yaroslav Solyanikov (Ярослав Соляников)
+	<br>
+	+79644597661(WhatsApp) <a href="https://www.facebook.com/yaroslav1982">@yaroslav1982(Facebook)</a>
+	<br>
+	This site uses <a href="https://github.com/DmitryBaranovskiy/raphael">Raphael</a>
+	<br>
+	Old version: <a href="index-old.html">Старая версия сайта</a>
+</footer>
+
+<!--<script type="text/javascript">
+	(function (d, w, c) {
+		(w[c] = w[c] || []).push(function() {
+			try {
+				w.yaCounter42436314 = new Ya.Metrika({
+					id:42436314,
+					clickmap:true,
+					trackLinks:true,
+					accurateTrackBounce:true
+				});
+			} catch(e) { }
+		});
+
+		var n = d.getElementsByTagName("script")[0],
+				s = d.createElement("script"),
+				f = function () { n.parentNode.insertBefore(s, n); };
+		s.type = "text/javascript";
+		s.async = true;
+		s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+		if (w.opera == "[object Opera]") {
+			d.addEventListener("DOMContentLoaded", f, false);
+		} else { f(); }
+	})(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/42436314" style="position:absolute; left:-9999px;" alt="" /></div></noscript>-->
 
 </body>
 </html>

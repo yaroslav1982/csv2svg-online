@@ -1,0 +1,448 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>#csv2svg plot online</title>
+    <meta charset="UTF-8"/>
+    <link href="css/ui_style_fd.css" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=0"/>
+    <script src="math.min.js"></script>
+    <script src="jquery-3.2.1.js"></script>
+    <script src="raphael.min.js"></script>
+    <script>
+        window.addEventListener("load", function () {
+            if(window.location.hash==="#metal"){
+                loadmetal();
+            }else{
+                $("#plot_btn").click();
+            }
+
+        });
+    </script>
+</head>
+
+
+<body onload="newbuild()">
+<div id="header" class="floating_block">
+    <div>
+
+<br>
+        <input type="button" value="Загрузить золото/серебро/платину/палладий / Load metal rates" class="ui_button" onclick="loadmetal()">
+<br>
+
+        <select id="paper" name="paper" class="input_type" onchange="onlyrest()" style="width: 19em;">
+            <option value=1>1748;1240;A3(Horizontal) - 297 x 420 mm</option>
+
+            <option value=2>1240;1748;A3(Vertical) - 420 x 297 mm</option>
+
+            <option value=3 selected>1240;874;A4(Horizontal) - 210 x 297 mm</option>
+
+            <option value=4>874;1240;A4(Vertical) - 297 x 210 mm</option>
+
+            <option value=5>874;620;A5(Horizontal) - 148 x 210 mm</option>
+
+            <option value=6>620;874;A5(Vertical) - 210 x 148 mm</option>
+        </select>
+
+        <input id="A4WH" class="input_type" value="1240;874;A4(Horizontal)">
+        Xstep:
+        <script src="js/plotlyXY.js"></script>&emsp;
+        <input type="button" value="Save SVG" class="ui_button" onclick="saveTextAsFile()">
+        <input type="button" value="Print SVG" class="ui_button" onclick="window.print();">
+    </div>
+    <div>
+
+        <textarea id='xDir' name='xDir' style='display: none;'></textarea>
+
+
+        <textarea name='fNN' id='fNN' style='display: none;'></textarea>
+
+        <textarea name='fTrio' id='fTrio' style='display: none;'></textarea>
+
+        <form method="post" id="template_form">
+            <div>
+                Выбрать файл с таблицей и параметрами:
+                <select id="selectNumber" name="selectNumber" onchange="onlyTTT();$('#load_template').click()"></select>
+            </div>
+            <div>
+                Имя файла: <textarea name="fNameT" class="input_type" id="fNameT">text4.txt</textarea>
+
+                <textarea name="data" id="data" style="display: none;"></textarea>
+                <textarea name="data2" id="data2" style="display: none;"></textarea>
+                <textarea name="data3" id="data3" style="display: none;"></textarea>
+                <textarea name="data4" id="data4" style="display: none;"></textarea>
+
+            </div>
+            <div>
+                <input type="button" value="Enlist" onclick="showT()" style="display: none;">
+                <input type="submit" id="load_template" value="Загрузить таблицу и параметры (из текстового поля!)"
+                       name="load"/>
+                <input type="submit" id="save_template" value="Сохранить таблицу и параметры" name="save"/>
+            </div>
+
+        </form>
+    </div>
+    <div>Введите или выберите функции</div>
+    <br>
+    <div id="calc_buttons">
+        <div>
+            <input type="button" value="x^2" onclick="DOBA('x^2')">
+            <input type="button" value="exp(x)" onclick="DOBA('exp(x)')">
+            <input type="button" value="log(x)" onclick="DOBA('log(x)')">
+        </div>
+        <div>
+            <input type="button" value="sin(x)" onclick="DOBA('sin(x)')">
+            <input type="button" value="cos(x)" onclick="DOBA('cos(x)')">
+            <input type="button" value="tan(x)" onclick="DOBA('tan(x)')">
+        </div>
+        <div>
+                    <span id="target_text"><input class="input_type" id="tCare" type="text" name="target"
+                                                  value="x^2; sin(x); x+2"/><div class="tooltip">"Разделитель функций - <b>";"</b></div></span>
+            <input type="button" value="C" onclick="DOBA('CLS')">
+        </div>
+    </div>
+
+    <div>
+        <input type="button" value="f(Xmin)=" onclick="CAREmin()">
+        <input type="button" value="f(Xmax)=" onclick="CAREmax()">
+        <textarea class="input_type" id="tX" name="target" cols="20" rows="2"></textarea>
+        <input id="tX" class="input_type" placeholder="f(Xmin&Xmax" ) style="display: none;">
+    </div>
+    <div class="divide_bottom">
+        От <input id="textFrom"
+                  onchange="this.value = this.value.replace(/[,]/g, '.'); this.value = this.value.replace(/[ ]/g, '.');"
+                  class="input_type" type="text" placeholder="-10"/>
+
+        <b class="undisplayable">c </b>Шаг<b class="undisplayable">ом</b> <input id="textStep"
+                                                                                 onchange="this.value = this.value.replace(/[,]/g, '.'); this.value = this.value.replace(/[ ]/g, '.');"
+                                                                                 class="input_type"
+                                                                                 placeholder="0.1"/>
+
+        До <input id="textTo"
+                  onchange="this.value = this.value.replace(/[,]/g, '.'); this.value = this.value.replace(/[ ]/g, '.');"
+                  class="input_type" type="text" placeholder="10"/>
+        <input type="button" id="plot_btn" class="ui_button" value="Построить График" onclick="CARE();">
+    </div>
+
+    <script src="js/adaptation.js"></script>
+
+    <textarea class="input_type" id="xColor" name="xColor" style="display: none;">red</textarea>
+    <textarea class="input_type" id="xStep" name="xStep" style="display: none;">0.5</textarea>
+
+    <div>
+        <div class="btn_group">
+            <div class="ui_button" id="rect">Нарисовать прямоугольники</div>
+
+            <div class="ui_button" id="unbind"  style="display: none;">Получить координаты прямоугольников
+
+
+</div>
+
+            <div class="ui_button" id="rect2" style="display: none;">Получить оординаты прямоугольников
+
+
+</div>
+
+            <div class="ui_button" id="chang"   style="display: none;">Получить графики внутри прямоугольников
+            
+
+
+</div>
+
+            <div class="ui_button" id="del">Удалить Прямоугольник</div>
+            <div class="ui_button" id="ren" style="display:none;">Переименовать Прямоугольник</div>
+            <div class="ui_button" id="clr">Очистить всё</div>
+
+        </div>
+
+        <input id="ABCD" name="ABCD" type="text" class="input_type" value="0;500"/>
+        <input id="YBCD" name="YBCD" class="input_type" value="500;0"/>
+        <input id="bibi" class="input_type" name="bibi"/>
+
+        <textarea id="zizi" class="input_type" name="zizi" style="display:none;"></textarea>
+    </div>
+</div>
+<div id="content_holder">
+
+
+    <script src="js/index_scripts.js"></script>
+    <script src="js/ui_script.js"></script>
+
+
+    <input id="XYc" class="input_type" name="XYc" type="text" style="display:none;" value="0;1#Js;Ji" disabled/>
+
+    <div class="container" id="printer">
+        <div class="centered" id="plotly0">
+            <div class="scroller"></div>
+            <div class="scroller right_side"></div>
+            <div class="paper" id="svg_paper"></div>
+            <b id="boldStuff" style="color:transparent;">SVG</b>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="hideable floating_block">
+            <div class="hideable_title">
+                <p class="icon hide_icon"></p>Plot points
+            </div>
+
+            <div class="centered" style="display: none;">
+                <div class="flexed_block stretch">
+                    <div>
+
+                        <script src="js/plotlyZ_temp.js"></script>&emsp;
+                        <input id="y330" type="text" class="input_type" name="y330" value="810"
+                               style="display: none;"/>
+                        <input id="x330" type="text" class="input_type" name="x330" value="20"
+                               style="display: none;"/>
+
+                        <textarea class="input_type" id="xColor" name="xColor"
+                                  style="display: none;">red</textarea>
+
+                        <textarea id="inputTextToSave" class="input_type" style="display: none;"></textarea>
+
+                        <textarea id="memo0" class="input_type" style="display: none;"></textarea>
+                        <textarea id="memo1" class="input_type" style="display: none;"></textarea>
+                        <textarea id="memo2" class="input_type" style="display: none;"></textarea>
+                        <textarea id="memo3" class="input_type" style="display: none;"></textarea>
+                        <textarea id="memo4" class="input_type" style="display: none;"></textarea>
+                        <textarea id="memo5" class="input_type" style="display: none;"></textarea>
+                        <textarea id="memo6" class="input_type" style="display: none;"></textarea>
+                        <textarea id="memo7" class="input_type" style="display: none;"></textarea>
+                        <textarea id="memo8" class="input_type" style="display: none;"></textarea>
+                        <textarea id="memo9" class="input_type" style="display: none;"></textarea>
+
+                        <textarea class="input_type" id="target" name="target">1	1	1
+1.1	1.21	1.21
+1.2	1.44	1.44
+1.3	1.69	1.69
+1.4	1.96	1.96
+1.5	2.25	2.25
+1.6	2.56	2.56
+1.7	2.89	2.89
+1.8	3.24	3.24
+1.9	3.61	3.61
+2	4	4
+2.1	4.41	4.41
+2.2	4.84	4.84
+2.3	5.29	5.29
+2.4	5.76	5.76
+2.5	6.25	6.25
+2.6	6.76	6.76
+2.7	7.29	7.29
+2.8	7.84	7.84
+2.9	8.41	8.41
+3	9	9
+3.1	9.61	9.61
+3.2	10.24	10.24
+3.3	10.89	10.89
+3.4	11.56	11.56
+3.5	12.25	12.25
+3.6	12.96	12.96
+3.7	13.69	13.69
+3.8	14.44	14.44
+3.9	15.21	15.21
+4	16	16
+4.1	16.81	16.81
+4.2	17.64	17.64
+4.3	18.49	18.49
+4.4	19.36	19.36
+4.5	20.25	20.25
+4.6	21.16	21.16
+4.7	22.09	22.09
+4.8	23.04	23.04
+4.9	24.01	24.01
+5	25	25
+5.1	26.01	26.01
+5.2	27.04	27.04
+5.3	28.09	28.09
+5.4	29.16	29.16
+5.5	30.25	30.25
+5.6	31.36	31.36
+5.7	32.49	32.49
+5.8	33.64	33.64
+5.9	34.81	34.81
+6	36	36
+6.1	37.21	37.21
+6.2	38.44	38.44
+6.3	39.69	39.69
+6.4	40.96	40.96
+6.5	42.25	42.25
+6.6	43.56	43.56
+6.7	44.89	44.89
+6.8	46.24	46.24
+6.9	47.61	47.61
+7	49	49
+7.1	50.41	50.41
+7.2	51.84	51.84
+7.3	53.29	53.29
+7.4	54.76	54.76
+7.5	56.25	56.25
+7.6	57.76	57.76
+7.7	59.29	59.29
+7.8	60.84	60.84
+7.9	62.41	62.41
+8	64	64
+8.1	65.61	65.61
+8.2	67.24	67.24
+8.3	68.89	68.89
+8.4	70.56	70.56
+8.5	72.25	72.25
+8.6	73.96	73.96
+8.7	75.69	75.69
+8.8	77.44	77.44
+8.9	79.21	79.21
+9	81	81
+9.1	82.81	82.81
+9.2	84.64	84.64
+9.3	86.49	86.49
+9.4	88.36	88.36
+9.5	90.25	90.25
+9.6	92.16	92.16
+9.7	94.09	94.09
+9.8	96.04	96.04
+9.9	98.01	98.01
+10	100	100
+</textarea>
+
+
+                        <textarea class="input_type" id="delimiters" name="delimiters"
+                                  style="display: none;height:90px;"></textarea>
+                        <textarea class="input_type" id="ftype" name="ftype"
+                                  style="display: none;">CALC</textarea>
+                        <textarea id="inputTextToSave" class="input_type" style="display: none;"></textarea>
+
+                    </div>
+                    <div id="edit_lines">
+
+                    </div>
+                </div>
+                <div>
+
+<textarea class="input_type" id="temptext" name="temptext" cols="80" rows="3">0 1 20;1100 810;10 2 2 red 1 1
+0 2 20;1100 810;10 2 2 black 1 1</textarea>
+
+                    <br>
+
+                    <input type="button"
+                           value="Вписать в один прямоугольник"
+                           onclick="$('.r_use').click()">
+
+                    <input type="button"
+                           value="Вписать в разные прямоугольники"
+                           onclick="setRectsToLines()">
+
+
+                    <input type="button"
+                           value="Обновить"
+                           onclick="newbuild()">
+
+                    <input id="inputFileNameToSaveAs" class="input_type" placeholder="Plot"
+                           style="display: none;"/>
+                    <input type="button" value="Save SVG" onclick="saveTextAsFile()" style="display: none;">
+                    <input type="button" value="Print SVG" onclick="window.print();" style="display: none;">
+
+                    <script src="js/index1_write1.js"></script>
+                    <input id="XPERS" name="XPERS" type="text" class="input_type" value="0;15" style="display:
+                    none;">
+
+                    <input id="xMMM" name="xMMM" type="text" class="input_type" value="0;500" style="display:
+                    none;">
+                    <input id="Xis1" name="Xis1" type="text" class="input_type" value="0;500" style="display:
+                    none;">
+
+                    <textarea name="framewidth" id="fw" class="input_type" style="display: none;">100	100
+                            200	200
+                            300	300
+                            400	470
+                            500	500
+                            600	600
+                            700	700
+                            800	800
+                            900	900
+                        1000	1000</textarea>
+
+                    <script src="js/index1_write2.js"></script>
+
+
+                    <input id="YPERS" name="YPERS" class="input_type" value="10;40" style="display: none;"/>
+                    <input id="yMMM" name="yMMM" class="input_type" value="500;0" style="display: none;"/>
+                    <input id="Yis1" name="Yis1" class="input_type" value="500;0" style="display: none;"/>
+
+                    <textarea name="frameheight" class="input_type" id="fh" style="display: none;">50	100
+                            100	200
+                            150	300
+                            200	400
+                            250	560
+                            300	600
+                            350	700
+                            400	800
+                            450	900
+                        500	1000</textarea>
+
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- Yandex.Metrika counter
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter42436314 = new Ya.Metrika({
+                    id:42436314,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/42436314" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+ /Yandex.Metrika counter -->
+
+
+<div id="footer" class="floating_block">
+    Feedback: Yaroslav Solyanikov (Ярослав Соляников) +79644597661(WhatsApp) @yaroslav1982(Facebook)
+    <br>
+    Github: <a href="https://github.com/yaroslav1982/csv2svg-online">csv2svg-online</a>
+    <br>
+    This site uses <a href="https://github.com/DmitryBaranovskiy/raphael">Raphael</a>
+
+</div>
+
+<input type="checkbox" id="Che1" style="display: none;" checked>
+<input type="checkbox" id="Che2" style="display: none;" checked>
+
+
+<textarea name="che12" id="che12" class="input_type" style="display: none;">0 0</textarea>
+<script src="XY.js"></script>
+
+<script src="js/index_scripts.js"></script>
+
+<script src="js/index1_scripts.js"></script>
+
+<script src="js/ui_script.js"></script>
+
+</body>
+</html>
