@@ -1,5 +1,5 @@
 var sele="";
-        document.write('<select name="fhBox" id="fhBox" style="width : 50" onclick="onlycols()">');
+        document.write('<select name="fhBox" id="fhBox" style="width:50; display: none;" onclick="onlycols()">');
 for(var i=0; i<8;i++) 
 {
 if (i==1) {sele="' selected>"} else {sele="'>"}

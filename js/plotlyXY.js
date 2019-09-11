@@ -12,7 +12,7 @@ if (j==0.2) {sele="' selected>"} else {sele="'>"}
 }
 document.write('</select>');
 
-document.write(' Ystep:');
+document.write(' OY:');
 
         document.write('<select name="tarYstep" id="tarYstep" style="width : 50">');
 for(var i=0.2; i<0.3;i=i+0.2) 

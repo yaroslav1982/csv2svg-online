@@ -1,5 +1,5 @@
 var sele="";
-        document.write('<select name="fwBox" id="fwBox" style="width : 50" onclick="onlycols();">');
+        document.write('<select name="fwBox" id="fwBox" style="width : 50; display: none;" onclick="onlycols();">');
 // var s=localStorage.getItem('varMM'); var x=this.value; var x1=parseFloat(x);var ta = s.split(";;"); document.getElementById('XPERS').value=ta[x1];">');
 
 for(var i=0; i<8;i++) 

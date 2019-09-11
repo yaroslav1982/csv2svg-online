@@ -1,5 +1,5 @@
 var sele="";
-        document.write('<select name="OXbox" id="OXbox" style="width : 50" onclick="newOX()">');
+        document.write('<select name="OXbox" id="OXbox" style="width:50;  display: none;" onclick="newOX()">');
 //for(var i=0; i<21;i++) 
 //{
 //if (i==0) {sele="' selected>"} else {sele="'>"}
@@ -12,7 +12,7 @@ document.write("<option value='"+2+"'>"+'OY-ZeroX'+"</option>");
 
 document.write('</select>');
 
-        document.write('<select name="OYbox" id="OYbox" style="width : 50" onclick="newOY();">');
+        document.write('<select name="OYbox" id="OYbox" style="width:50;  display: none;" onclick="newOY();">');
 //for(var i=0; i<21;i++) 
 //{
 //if (i==0) {sele="' selected>"} else {sele="'>"}

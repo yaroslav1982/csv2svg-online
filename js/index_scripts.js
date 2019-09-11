@@ -25,6 +25,8 @@ document.getElementById('temptext').value=ab;
 
 $("#newT_button").click(function(){
 
+alert('tempB-n');
+
 var a1=document.getElementById('xBox').value;
 var a2=document.getElementById('yBox').value;
 
@@ -64,6 +66,7 @@ document.getElementById('temptext').value=document.getElementById('temptext').va
 
 $("#template_button").click(function(){
 
+alert('tempB-t');
 
 var a1=document.getElementById('xBox').value;
 var a2=document.getElementById('yBox').value;
@@ -140,5 +143,37 @@ $("#smooth_button").click(function(){
 $("#target").click(function(){
 	//////////////////this.value = this.value.replace(/[;]/g, '\t');
 	//////////////////this.value = this.value.replace(/[ ]/g, '\t');
+	//////////////////this.value = this.value.replace(' ', '\t');
+});
+
+$("#textFrom").click(function(){
+	//alert('TF');
+
+//////////////////
+this.value = this.value.replace(/[,]/g, '.');
+	//////////////////
+this.value = this.value.replace(/[ ]/g, '.');
+	//////////////////this.value = this.value.replace(' ', '\t');
+});
+
+$("#textTo").click(function(){
+	//alert('TF');
+
+//////////////////
+this.value = this.value.replace(/[,]/g, '.');
+	//////////////////
+this.value = this.value.replace(/[ ]/g, '.');
+	//////////////////this.value = this.value.replace(' ', '\t');
+});
+
+//textStep
+
+$("#textStep").click(function(){
+	//alert('TF');
+
+//////////////////
+this.value = this.value.replace(/[,]/g, '.');
+	//////////////////
+this.value = this.value.replace(/[ ]/g, '.');
 	//////////////////this.value = this.value.replace(' ', '\t');
 });
